@@ -8,6 +8,7 @@ function App() {
   const { isReady, isLoggedIn, profile, error } = useLiff();
 
   if (error) return <div>LIFF init error: {JSON.stringify(error)}</div>;
+  
   if (!isReady) return <CircularProgress />;
 
   return (
