@@ -1,12 +1,9 @@
-import React from "react";
-import { Button, Typography, Box } from "@mui/material";
+import { Button, Typography, Box, Stack } from "@mui/material";
 import BackButton from "../../components/shared/BackButton";
 import { mockJobs } from "../../mock/JobList.mock";
-
 import TuneIcon from "@mui/icons-material/Tune";
 import JobFilterDrawer from "../../components/JobFilterDrawer";
 import { useState } from "react";
-
 import JobCard from "../../components/JobCard";
 
 const JobList = () => {
@@ -45,14 +42,11 @@ const JobList = () => {
       <Box sx={{ mt: "1rem" }}>
         <BackButton />
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          my: 2,
-          mx: 1,
-        }}
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        sx={{ my: 2, mx: 1 }}
       >
         <Typography variant="h5" fontWeight="bold">
           ประกาศงาน
@@ -65,7 +59,7 @@ const JobList = () => {
         >
           ตัวกรอง
         </Button>
-      </Box>
+      </Stack>
 
       <JobFilterDrawer
         open={isFilterOpen}

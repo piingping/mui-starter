@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Drawer,
   Box,
@@ -6,15 +5,13 @@ import {
   IconButton,
   Button,
   Chip,
+  Stack,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { salaryRanges, jobTags, jobStatuses } from "../constants/jobFilters";
-
 import type { JobFilterDrawerProps } from "../types/jobFilterDrawer";
 
-
-
-const JobFilterDrawer  = ({
+const JobFilterDrawer = ({
   open,
   onClose,
   selectedFilters,
@@ -44,19 +41,18 @@ const JobFilterDrawer  = ({
         },
       }}
     >
-      <Box
+      <Stack
         px={2}
         py={3}
         height="60vh"
-        display="flex"
-        flexDirection="column"
         justifyContent="space-between"
+        direction="column"
       >
         <Box>
-          <Box
-            display="flex"
-            alignItems="center"
+          <Stack
+            direction="row"
             justifyContent="space-between"
+            alignItems="center"
             mb={2}
           >
             <Box flexGrow={1} textAlign="center">
@@ -67,18 +63,18 @@ const JobFilterDrawer  = ({
             <IconButton onClick={onClose}>
               <CloseIcon />
             </IconButton>
-          </Box>
+          </Stack>
 
           <Box mb={3}>
             <Typography fontWeight="bold" mb={1}>
               ค่าตอบแทน
             </Typography>
-            <Box
+            <Stack
+              direction="row"
+              spacing={1}
               sx={{
-                display: "flex",
                 overflowX: "auto",
                 whiteSpace: "nowrap",
-                gap: 1,
                 pb: 1,
               }}
             >
@@ -91,7 +87,6 @@ const JobFilterDrawer  = ({
                   sx={{
                     flexShrink: 0,
                     borderRadius: 3,
-
                     border: 1,
                     backgroundColor:
                       selectedFilters.salary === range ||
@@ -106,19 +101,19 @@ const JobFilterDrawer  = ({
                   }}
                 />
               ))}
-            </Box>
+            </Stack>
           </Box>
 
           <Box mb={3}>
             <Typography fontWeight="bold" mb={1}>
               ประเภทงาน
             </Typography>
-            <Box
+            <Stack
+              direction="row"
+              spacing={1}
               sx={{
-                display: "flex",
                 overflowX: "auto",
                 whiteSpace: "nowrap",
-                gap: 1,
                 pb: 1,
               }}
             >
@@ -145,19 +140,19 @@ const JobFilterDrawer  = ({
                   }}
                 />
               ))}
-            </Box>
+            </Stack>
           </Box>
 
           <Box>
             <Typography fontWeight="bold" mb={1}>
               สถานะงาน
             </Typography>
-            <Box
+            <Stack
+              direction="row"
+              spacing={1}
               sx={{
-                display: "flex",
                 overflowX: "auto",
                 whiteSpace: "nowrap",
-                gap: 1,
                 pb: 1,
               }}
             >
@@ -184,7 +179,7 @@ const JobFilterDrawer  = ({
                   }}
                 />
               ))}
-            </Box>
+            </Stack>
           </Box>
         </Box>
 
@@ -202,7 +197,7 @@ const JobFilterDrawer  = ({
         >
           ยืนยัน
         </Button>
-      </Box>
+      </Stack>
     </Drawer>
   );
 };

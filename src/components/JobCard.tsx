@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Typography, Chip } from "@mui/material";
+import { Card, CardContent, Typography, Chip, Stack } from "@mui/material";
 import { formatDistanceToNow } from "date-fns";
 import { th } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
@@ -37,8 +37,8 @@ const JobCard = ({ job }: { job: Job }) => {
         <Typography variant="body2" marginBottom={2}>
           {job.description} {job.time}
         </Typography>
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Box display="flex" alignItems="center">
+        <Stack direction="row"  justifyContent="space-between" alignItems="center">
+          <Stack direction="row" alignItems="center">
             <Typography
               variant="body2"
               color="#00794E"
@@ -50,7 +50,7 @@ const JobCard = ({ job }: { job: Job }) => {
             <Typography variant="body2" color="text.secondary" fontSize={12}>
               {timeAgo}
             </Typography>
-          </Box>
+          </Stack>
 
           <Chip
             label={job.status}
@@ -69,7 +69,7 @@ const JobCard = ({ job }: { job: Job }) => {
               py: 0.5,
             }}
           />
-        </Box>
+        </Stack>
       </CardContent>
     </Card>
   );
