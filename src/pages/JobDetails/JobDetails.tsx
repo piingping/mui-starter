@@ -25,7 +25,7 @@ import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
 import InfoOutlineIcon from "@mui/icons-material/InfoOutline";
 import PersonOutlineRoundedIcon from "@mui/icons-material/PersonOutlineRounded";
 
-const JobDetails: React.FC = () => {
+const JobDetails = () => {
   const { profile, isReady, isLoggedIn } = useLiff();
   const { id } = useParams();
   const jobId = parseInt(id || "", 10);

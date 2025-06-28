@@ -8,38 +8,20 @@ import {
   Chip,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { salaryRanges, jobTags, jobStatuses } from "../constants/jobFilters";
 
-const salaryRanges = [
-  "ทั้งหมด",
-  "1 - 500 บาท",
-  "501 - 2,000 บาท",
-  "2,001 - 5,000 บาท",
-  "5,001 - 10,000 บาท",
-  "10,001 - 20,000 บาท",
-  "20,000 บาทขั้นไป",
-];
-const jobTags = ["ทั้งหมด", "รับจ้าง", "บริการ", "งานช่าง", "ขนส่ง"];
-const jobStatuses = ["ทั้งหมด", "ว่างอยู่", "ใกล้เต็ม", "เต็มแล้ว"];
+import type { JobFilterDrawerProps } from "../types/jobFilterDrawer";
 
-type Props = {
-  open: boolean;
-  onClose: () => void;
-  selectedFilters: {
-    salary?: string;
-    tag?: string;
-    status?: string;
-  };
-  onFilterChange: (filters: Props["selectedFilters"]) => void;
-};
 
-const JobFilterDrawer: React.FC<Props> = ({
+
+const JobFilterDrawer  = ({
   open,
   onClose,
   selectedFilters,
   onFilterChange,
-}) => {
+}: JobFilterDrawerProps) => {
   const handleSelect = (
-    type: keyof Props["selectedFilters"],
+    type: keyof JobFilterDrawerProps["selectedFilters"],
     value: string
   ) => {
     onFilterChange({
@@ -109,7 +91,7 @@ const JobFilterDrawer: React.FC<Props> = ({
                   sx={{
                     flexShrink: 0,
                     borderRadius: 3,
-                   
+
                     border: 1,
                     backgroundColor:
                       selectedFilters.salary === range ||
@@ -121,7 +103,6 @@ const JobFilterDrawer: React.FC<Props> = ({
                       (!selectedFilters.salary && range === "ทั้งหมด")
                         ? "#FF8A00"
                         : "#9E9E9E",
-                     
                   }}
                 />
               ))}

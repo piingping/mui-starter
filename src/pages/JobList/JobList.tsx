@@ -9,7 +9,7 @@ import { useState } from "react";
 
 import JobCard from "../../components/JobCard";
 
-const JobList: React.FC = () => {
+const JobList = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filters, setFilters] = useState<{
     salary?: string;

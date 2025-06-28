@@ -1,32 +1,11 @@
-import React from "react";
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Chip,
-} from "@mui/material";
+import { Box, Card, CardContent, Typography, Chip } from "@mui/material";
 import { formatDistanceToNow } from "date-fns";
 import { th } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
 import { statusStyleMap } from "../constants/statusStyleMap";
-import type { JobStatus } from "../types/jobStatus";
-type Job = {
-  id: number;
-  title: string;
-  description: string;
-  time: string;
-  tags: string[];
-  status: JobStatus; 
-  postedAt: string;
-  
-};
+import type { Job } from "../types/jobStatus";
 
-interface JobCardProps {
-  job: Job;
-}
-
-const JobCard: React.FC<JobCardProps> = ({ job }) => {
+const JobCard = ({ job }: { job: Job }) => {
   const navigate = useNavigate();
 
   const timeAgo = formatDistanceToNow(new Date(job.postedAt), {
@@ -58,11 +37,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
         <Typography variant="body2" marginBottom={2}>
           {job.description} {job.time}
         </Typography>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
+        <Box display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex" alignItems="center">
             <Typography
               variant="body2"
@@ -72,11 +47,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
             >
               {job.tags}
             </Typography>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              fontSize={12}
-            >
+            <Typography variant="body2" color="text.secondary" fontSize={12}>
               {timeAgo}
             </Typography>
           </Box>
