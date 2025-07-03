@@ -1,5 +1,5 @@
 import { useLiff } from "./hooks/useLiff";
-import { CircularProgress, Container, Typography} from "@mui/material";
+import { CircularProgress, Box, Typography} from "@mui/material";
 import JobList from "./pages/JobList/JobList.tsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import JobDetails from "./pages/JobDetails/JobDetails";
@@ -13,7 +13,7 @@ function App() {
 
   return (
     <Router>
-      <Container>
+      <Box>
         {isLoggedIn && profile ? (
           <Routes>
             <Route path="/" element={<JobList />} />
@@ -22,7 +22,7 @@ function App() {
         ) : (
           <Typography variant="body1">Please login via LINE</Typography>
         )}
-      </Container>
+      </Box>
     </Router>
   );
 }
