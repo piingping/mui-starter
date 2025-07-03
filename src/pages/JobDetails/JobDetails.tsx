@@ -25,6 +25,7 @@ import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
 import InfoOutlineIcon from "@mui/icons-material/InfoOutline";
 import PersonOutlineRoundedIcon from "@mui/icons-material/PersonOutlineRounded";
 import JobStatusChip from "../../components/shared/JobStatusChip";
+import JobActionButtons from "../../components/JobActionButtons";
 
 const JobDetails = () => {
   const { profile, isReady, isLoggedIn } = useLiff();
@@ -108,83 +109,7 @@ const JobDetails = () => {
         </Typography>
 
         {/* Icon Button Grid */}
-        <Stack
-          direction="row"
-          flexWrap="wrap"
-          justifyContent="space-evenly"
-          spacing={3.375}
-          height="104px"
-          paddingX={"1.5rem"}
-        >
-          <Stack
-            flex={1}
-            bgcolor="#FAFAFA"
-            p={2}
-            borderRadius={2}
-            alignItems="center"
-            onClick={() => {
-              const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(
-                job.location
-              )}`;
-              window.open(mapsUrl, "_blank");
-            }}
-          >
-            <LocationPinIcon
-              sx={{ width: "39px", height: "40px", color: "#3AB186" }}
-            />
-            <Typography
-              sx={{ fontSize: "14px", fontWeight: "bold", color: "#1C1818" }}
-            >
-              ดูที่อยู่
-            </Typography>
-          </Stack>
-
-          <Stack
-            flex={1}
-            bgcolor={isSaved ? "#3AB186" : "#FAFAFA"}
-            p={2}
-            borderRadius={2}
-            alignItems="center"
-            onClick={() => setIsSaved((prev) => !prev)}
-          >
-            <StarRoundedIcon
-              sx={{
-                width: "39px",
-                height: "39px",
-                color: isSaved ? "#FFFFFF" : "#3AB186",
-              }}
-            />
-            <Typography
-              sx={{
-                fontSize: "14px",
-                fontWeight: "bold",
-                color: isSaved ? "#FFFFFF" : "#1C1818",
-              }}
-            >
-              บันทึก
-            </Typography>
-          </Stack>
-
-          <Stack
-            flex={1}
-            bgcolor="#FAFAFA"
-            p={2}
-            borderRadius={2}
-            alignItems="center"
-            onClick={() => {
-              window.location.href = `tel:${job.tel}`;
-            }}
-          >
-            <LocalPhoneIcon
-              sx={{ width: "39px", height: "40px", color: "#3AB186" }}
-            />
-            <Typography
-              sx={{ fontSize: "14px", fontWeight: "bold", color: "#1C1818" }}
-            >
-              ติดต่อ
-            </Typography>
-          </Stack>
-        </Stack>
+        <JobActionButtons job={job} isSaved={isSaved} setIsSaved={setIsSaved} showCancelButton={false} />
 
         <Divider />
 
