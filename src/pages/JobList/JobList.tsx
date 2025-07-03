@@ -39,39 +39,41 @@ const JobList = () => {
 
   return (
     <>
-      <Box sx={{ mt: "1rem" }}>
-        <BackButton />
-      </Box>
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        sx={{ my: 2, mx: 1 }}
-      >
-        <Typography variant="h5" fontWeight="bold">
-          ประกาศงาน
-        </Typography>
-        <Button
-          variant="outlined"
-          sx={{ borderRadius: 10 }}
-          startIcon={<TuneIcon />}
-          onClick={() => setIsFilterOpen(true)}
+      <Box sx={{padding: "1rem"}}>
+        <Box >
+          <BackButton />
+        </Box>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          sx={{ my: 2, mx: 1 }}
         >
-          ตัวกรอง
-        </Button>
-      </Stack>
+          <Typography variant="h5" fontWeight="bold">
+            ประกาศงาน
+          </Typography>
+          <Button
+            variant="outlined"
+            sx={{ borderRadius: 10 }}
+            startIcon={<TuneIcon />}
+            onClick={() => setIsFilterOpen(true)}
+          >
+            ตัวกรอง
+          </Button>
+        </Stack>
 
-      <JobFilterDrawer
-        open={isFilterOpen}
-        onClose={() => setIsFilterOpen(false)}
-        selectedFilters={filters}
-        onFilterChange={setFilters}
-      />
+        <JobFilterDrawer
+          open={isFilterOpen}
+          onClose={() => setIsFilterOpen(false)}
+          selectedFilters={filters}
+          onFilterChange={setFilters}
+        />
 
-      <Box>
-        {filteredJobs.map((job) => (
-          <JobCard key={job.id} job={job} />
-        ))}
+        <Box>
+          {filteredJobs.map((job) => (
+            <JobCard key={job.id} job={job} />
+          ))}
+        </Box>
       </Box>
     </>
   );
