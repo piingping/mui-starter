@@ -24,6 +24,7 @@ import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
 import InfoOutlineIcon from "@mui/icons-material/InfoOutline";
 import PersonOutlineRoundedIcon from "@mui/icons-material/PersonOutlineRounded";
+import JobStatusChip from "../../components/shared/JobStatusChip";
 
 const JobDetails = () => {
   const { profile, isReady, isLoggedIn } = useLiff();
@@ -39,6 +40,7 @@ const JobDetails = () => {
   const [open, setOpen] = useState(false);
   const [openImageViewer, setOpenImageViewer] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(1);
+  console.log("Job Title:", job.title);
 
   return (
     <>
@@ -46,7 +48,7 @@ const JobDetails = () => {
       <AppBar
         position="fixed"
         elevation={0}
-        sx={{ backgroundColor: "#00794E", padding: 0, margin: 0 }}
+        sx={{ backgroundColor: "#00794E", padding: 0, margin: 0}}
       >
         <Toolbar
           disableGutters
@@ -58,6 +60,7 @@ const JobDetails = () => {
           }}
         >
           <BackButton />
+
           <Typography
             sx={{
               flexGrow: 1,
@@ -72,16 +75,23 @@ const JobDetails = () => {
           >
             ข้อมูลงาน
           </Typography>
+
+          <Box sx={{ position: "relative" }}>
+            <Box sx={{ position: "absolute", top: "16px", right: 0 }}>
+              <JobStatusChip status={job.status} />
+            </Box>
+          </Box>
         </Toolbar>
       </AppBar>
 
       {/* Content */}
-      <Stack spacing={3} mt={8}>
-        <Typography variant="h5" fontWeight="bold">
+
+      <Stack spacing={3} mt={10}>
+        <Typography variant="h5" fontWeight="bold" paddingX={"1rem"}>
           {job.title}
         </Typography>
 
-        <Stack direction="row" spacing={1.25}>
+        <Stack direction="row" spacing={1.25} paddingX={"1rem"}>
           <Typography color="green" sx={{ fontSize: "14px" }}>
             {job.tags}
           </Typography>
@@ -93,7 +103,7 @@ const JobDetails = () => {
           </Typography>
         </Stack>
 
-        <Typography variant="body1" sx={{ fontSize: "16px" }}>
+        <Typography variant="body1" paddingX={"1rem"} sx={{ fontSize: "16px" }}>
           {job.description}
         </Typography>
 
@@ -104,6 +114,7 @@ const JobDetails = () => {
           justifyContent="space-evenly"
           spacing={3.375}
           height="104px"
+          paddingX={"1.5rem"}
         >
           <Stack
             flex={1}
@@ -198,7 +209,7 @@ const JobDetails = () => {
 
         <Divider />
 
-        <Stack direction="row" spacing={2}>
+        <Stack direction="row" spacing={2} paddingX={"1rem"}>
           <PlaceOutlinedIcon
             sx={{ width: "18px", height: "18px", color: "#3D3D3D" }}
           />
@@ -211,10 +222,10 @@ const JobDetails = () => {
           component="img"
           src={job.imageUrl[0]}
           alt={job.title}
-          sx={{ width: "100%", mb: 2 }}
+          sx={{ width: "100%", mb: 2, padding: 0 }}
         />
 
-        <Stack direction="column" spacing={3}>
+        <Stack direction="column" spacing={3} paddingX={"1rem"}>
           <Box>
             <Typography sx={{ color: "#9E9E9E", fontSize: "14px" }}>
               ภาระงาน

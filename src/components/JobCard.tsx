@@ -1,9 +1,9 @@
-import { Card, CardContent, Typography, Chip, Stack } from "@mui/material";
+import { Card, CardContent, Typography, Stack } from "@mui/material";
 import { formatDistanceToNow } from "date-fns";
 import { th } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
-import { statusStyleMap } from "../constants/statusStyleMap";
 import type { Job } from "../types/jobStatus";
+import JobStatusChip from "../components/shared/JobStatusChip";
 
 const JobCard = ({ job }: { job: Job }) => {
   const navigate = useNavigate();
@@ -37,7 +37,11 @@ const JobCard = ({ job }: { job: Job }) => {
         <Typography variant="body2" marginBottom={2}>
           {job.description} {job.time}
         </Typography>
-        <Stack direction="row"  justifyContent="space-between" alignItems="center">
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
           <Stack direction="row" alignItems="center">
             <Typography
               variant="body2"
@@ -52,23 +56,7 @@ const JobCard = ({ job }: { job: Job }) => {
             </Typography>
           </Stack>
 
-          <Chip
-            label={job.status}
-            size="small"
-            variant="outlined"
-            sx={{
-              backgroundColor: statusStyleMap[job.status].bg,
-              borderColor: statusStyleMap[job.status].border,
-              color: statusStyleMap[job.status].text,
-              fontSize: 12,
-              fontWeight: 500,
-              borderWidth: 1,
-              borderStyle: "solid",
-              borderRadius: 10,
-              px: 1,
-              py: 0.5,
-            }}
-          />
+          <JobStatusChip status={job.status} />
         </Stack>
       </CardContent>
     </Card>
