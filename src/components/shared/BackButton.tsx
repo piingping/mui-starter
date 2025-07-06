@@ -1,24 +1,27 @@
-import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
-import { Typography, Box } from '@mui/material';
+import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
+import { Typography, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function BackButton() {
+  const navigate = useNavigate();
+
   return (
-    <Box
-      onClick={() => window.history.back()}
+    <Button
+      onClick={() => navigate(-1)} 
       sx={{
-        display: 'flex',
-        alignItems: 'center',
-        cursor: 'pointer',
-        width: 'fit-content',
-    
-        
+        display: "flex",
+        alignItems: "center",
+        width: "fit-content",
+        minWidth: "unset", 
+        padding: 0, 
+        color: "inherit",
       }}
     >
-      <ArrowBackIosRoundedIcon sx={{ fontSize: '14px', mr: 0.5, mt: '2px' }} />
-      <Typography variant="body2" sx={{  fontSize: '14px', color:"inherit",}}>
+      <ArrowBackIosRoundedIcon sx={{ fontSize: "14px", mr: 0.5, mt: "2px" }} />
+      <Typography variant="body2" sx={{ fontSize: "14px" }}>
         กลับ
       </Typography>
-    </Box>
+    </Button>
   );
 }
 
