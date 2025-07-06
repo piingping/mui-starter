@@ -69,11 +69,11 @@ const JobList = () => {
           onFilterChange={setFilters}
         />
 
-        <Box>
+        <Stack gap={"1rem"}>
           {filteredJobs.map((job) => (
             <JobCard key={job.id} job={job} />
           ))}
-        </Box>
+        </Stack>
       </Box>
     </>
   );

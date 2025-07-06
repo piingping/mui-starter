@@ -6,8 +6,6 @@ import {
   Toolbar,
   Divider,
   Button,
-  Alert,
-  Snackbar,
   Stack,
   Box,
 } from "@mui/material";
@@ -16,10 +14,8 @@ import { th } from "date-fns/locale";
 import { mockJobs } from "../../mock/JobList.mock";
 import ImageLightbox from "../../components/ImageLightbox";
 import { useLiff } from "../../hooks/useLiff";
+import { useNavigate } from "react-router-dom"; 
 import BackButton from "../../components/shared/BackButton";
-import LocationPinIcon from "@mui/icons-material/LocationPin";
-import StarRoundedIcon from "@mui/icons-material/StarRounded";
-import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
 import InfoOutlineIcon from "@mui/icons-material/InfoOutline";
@@ -38,7 +34,7 @@ const JobDetails = () => {
   }
 
   const [isSaved, setIsSaved] = useState(false);
-  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const [openImageViewer, setOpenImageViewer] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(1);
   console.log("Job Title:", job.title);
@@ -267,26 +263,11 @@ const JobDetails = () => {
                 width: "100%",
                 borderRadius: "8px",
               }}
-              onClick={() => setOpen(true)}
+             onClick={() => navigate(`/jobs/${job.id}/reviewRegister`)} 
             >
               สมัครงานนี้
             </Button>
           </Box>
-
-          <Snackbar
-            open={open}
-            autoHideDuration={4000}
-            onClose={() => setOpen(false)}
-            anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          >
-            <Alert
-              onClose={() => setOpen(false)}
-              severity="success"
-              sx={{ width: "100%" }}
-            >
-              ส่งแบบฟอร์มสมัครงานของคุณแล้ว รอการตอบกลับ
-            </Alert>
-          </Snackbar>
         </Stack>
       </Stack>
     </>
