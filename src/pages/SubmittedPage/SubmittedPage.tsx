@@ -1,7 +1,9 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import sentRegisterForm from "../../assets/sentRegisterForm.png";
+import { useNavigate } from "react-router-dom";
 
-function SubmittedPage() {
+const SubmittedPage = () => {
+  const navigate = useNavigate();
   return (
     <Box
       height="100vh"
@@ -9,7 +11,7 @@ function SubmittedPage() {
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
-      gap={"4.5rem"}
+      gap={"3rem"}
     >
       <img
         src={sentRegisterForm}
@@ -22,8 +24,25 @@ function SubmittedPage() {
         <br />
         รอการติดต่อกลับ
       </Typography>
+
+      <Button
+        fullWidth
+        variant="outlined"
+        sx={{
+          border: "1.5px solid #FF8A00",
+          borderRadius: "8px",
+          color: "#1C1818",
+          fontSize: "1rem",
+          fontWeight: "700",
+          width: "155.5px",
+          boxShadow: "0px 4px 10px #0000001A",
+        }}
+        onClick={() => navigate(`/`)}
+      >
+        ปิดหน้าต่าง
+      </Button>
     </Box>
   );
-}
+};
 
 export default SubmittedPage;
