@@ -6,6 +6,7 @@ import { useState } from "react";
 import BackButton from "../../components/shared/BackButton";
 import PersonalInfomation from "../../components/PersonalInfomation";
 import JobInfoContainer from "../../components/JobInfoContainer";
+import { ApplicationStatus } from "../../types/applicationStatus";
 
 const ReviewRegisteration = () => {
   const { id } = useParams();
@@ -13,19 +14,20 @@ const ReviewRegisteration = () => {
   const [note, setNote] = useState("");
 
   const handleSubmit = () => {
-    const previous = JSON.parse(
-      localStorage.getItem("jobApplications") || "[]"
-    );
 
     const newApplication = {
       jobId: id,
       appliedAt: new Date().toISOString(),
       note: note,
+      applicationStatus: "รอการยืนยัน" as ApplicationStatus,
     };
+
+    const stored = localStorage.getItem("jobApplications");
+    const existingApplications = stored ? JSON.parse(stored) : [];
 
     localStorage.setItem(
       "jobApplications",
-      JSON.stringify([...previous, newApplication])
+      JSON.stringify([...existingApplications, newApplication])
     );
 
     navigate(`/jobs/${id}/submitted`);

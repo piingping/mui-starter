@@ -1,13 +1,18 @@
 import { Chip } from "@mui/material";
 import type { JobStatus } from "../../types/jobStatus";
+import type { ApplicationStatus } from "../../types/applicationStatus";
 import { statusStyleMap } from "../../constants/statusStyleMap";
 
 type Props = {
-  status: JobStatus;
+  status: JobStatus | ApplicationStatus;
 };
 
 const JobStatusChip = ({ status }: Props) => {
   const style = statusStyleMap[status];
+
+  if (!style) {
+    return <Chip label={status} size="small" variant="outlined" />;
+  }
 
   return (
     <Chip

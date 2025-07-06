@@ -4,8 +4,15 @@ import { th } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
 import type { Job } from "../types/jobStatus";
 import JobStatusChip from "../components/shared/JobStatusChip";
+import { ApplicationStatus } from "../types/applicationStatus";
 
-const JobCard = ({ job }: { job: Job }) => {
+type JobCardProps = {
+  job: Job;
+  applicationStatus?: ApplicationStatus;
+  onClick?: () => void;
+};
+
+const JobCard = ({ job, applicationStatus,onClick }: JobCardProps) => {
   const navigate = useNavigate();
 
   const timeAgo = formatDistanceToNow(new Date(job.postedAt), {
@@ -13,17 +20,19 @@ const JobCard = ({ job }: { job: Job }) => {
     locale: th,
   });
 
+
+
   return (
     <Card
       sx={{
-        marginBottom: 3,
+       
         border: 1,
         borderRadius: 3,
         borderColor: "#e0e0e0",
         boxShadow: "none",
         cursor: "pointer",
       }}
-      onClick={() => navigate(`/jobs/${job.id}`)}
+      onClick={onClick ?? (() => navigate(`/jobs/${job.id}`))} 
     >
       <CardContent>
         <Typography
@@ -56,7 +65,7 @@ const JobCard = ({ job }: { job: Job }) => {
             </Typography>
           </Stack>
 
-          <JobStatusChip status={job.status} />
+          <JobStatusChip status={applicationStatus ?? job.status} />
         </Stack>
       </CardContent>
     </Card>
