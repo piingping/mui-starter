@@ -1,22 +1,15 @@
-import React from "react";
-import { Button, Typography, Box } from "@mui/material";
+import { Button, Typography, Box, Stack } from "@mui/material";
 import BackButton from "../../components/shared/BackButton";
 import { mockJobs } from "../../mock/JobList.mock";
-
 import TuneIcon from "@mui/icons-material/Tune";
 import JobFilterDrawer from "../../components/JobFilterDrawer";
 import { useState } from "react";
-
 import JobCard from "../../components/JobCard";
+import type { SelectedFilters } from "../../types/jobFilterDrawer";
 
-const JobList: React.FC = () => {
+const JobList = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [filters, setFilters] = useState<{
-    salary?: string;
-    tag?: string;
-    status?: string;
-  }>({});
-
+  const [filters, setFilters] = useState<SelectedFilters>({});
   const filteredJobs = mockJobs.filter((job) => {
     const salaryOk =
       !filters.salary ||
@@ -36,48 +29,46 @@ const JobList: React.FC = () => {
       (filters.salary === "20,000 บาทขั้นไป" && job.salary > 20000);
     const tagOk = !filters.tag || job.tags.includes(filters.tag);
     const statusOk = !filters.status || job.status === filters.status;
-
     return salaryOk && tagOk && statusOk;
   });
 
   return (
     <>
-      <Box sx={{ mt: "1rem" }}>
-        <BackButton />
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          my: 2,
-          mx: 1,
-        }}
-      >
-        <Typography variant="h5" fontWeight="bold">
-          ประกาศงาน
-        </Typography>
-        <Button
-          variant="outlined"
-          sx={{ borderRadius: 10 }}
-          startIcon={<TuneIcon />}
-          onClick={() => setIsFilterOpen(true)}
+      <Box sx={{ padding: "1rem" }}>
+        <Box>
+          <BackButton />
+        </Box>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          sx={{ my: 2, mx: 1 }}
         >
-          ตัวกรอง
-        </Button>
-      </Box>
+          <Typography variant="h5" fontWeight="bold">
+            ประกาศงาน
+          </Typography>
+          <Button
+            variant="outlined"
+            sx={{ borderRadius: 10 }}
+            startIcon={<TuneIcon />}
+            onClick={() => setIsFilterOpen(true)}
+          >
+            ตัวกรอง
+          </Button>
+        </Stack>
 
-      <JobFilterDrawer
-        open={isFilterOpen}
-        onClose={() => setIsFilterOpen(false)}
-        selectedFilters={filters}
-        onFilterChange={setFilters}
-      />
+        <JobFilterDrawer
+          open={isFilterOpen}
+          onClose={() => setIsFilterOpen(false)}
+          selectedFilters={filters}
+          onFilterChange={setFilters}
+        />
 
-      <Box>
-        {filteredJobs.map((job) => (
-          <JobCard key={job.id} job={job} />
-        ))}
+        <Stack gap={"1rem"}>
+          {filteredJobs.map((job) => (
+            <JobCard key={job.id} job={job} />
+          ))}
+        </Stack>
       </Box>
     </>
   );

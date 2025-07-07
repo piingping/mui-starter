@@ -1,22 +1,20 @@
 import type { JobStatus } from "../types/jobStatus";
+import { ApplicationStatus } from "../types/applicationStatus";
 
-export const statusStyleMap: Record<
-  JobStatus,
-  { bg: string; border: string; text: string }
-> = {
-  ว่างอยู่: {
-    bg: "#e8f5e9",
-    border: "#388e3c",
-    text: "#1b5e20",
-  },
-  ใกล้เต็ม: {
-    bg: "#fffde7",
-    border: "#fbc02d",
-    text: "#f57f17",
-  },
-  เต็มแล้ว: {
-    bg: "#E4E4E4",
-    border: "#9E9E9E",
-    text: "#9E9E9E",
-  },
+type StatusStyle = {
+  bg: string;
+  border: string;
+  text: string;
+};
+
+export const statusStyleMap: Record<JobStatus | ApplicationStatus, StatusStyle> = {
+  //Job status
+  "ว่างอยู่": { bg: "#E0FFE4", border: "#00C853", text: "#007E33" },
+  "ใกล้เต็ม": { bg: "#FFD4B6", border: "#FFAB00", text: "#FF6F00" },
+  "เต็มแล้ว": { bg: "#E4E4E4", border: "#9E9E9E", text: "#9E9E9E" },
+
+  //Application status
+  "รอการยืนยัน": { bg: "#FFD4B6", border: "#FFAB00", text: "#FF6F00" },
+  "ผ่าน": { bg: "#E0FFE4", border: "#00C853", text: "#007E33" },
+  "ไม่ผ่าน": { bg: "#E4E4E4", border: "#9E9E9E", text: "#9E9E9E" },
 };

@@ -1,35 +1,32 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import {
   Typography,
-  Box,
   AppBar,
   Toolbar,
   Divider,
   Button,
-  Alert,
-  Snackbar,
+  Stack,
+  Box,
 } from "@mui/material";
 import { format } from "date-fns";
 import { th } from "date-fns/locale";
 import { mockJobs } from "../../mock/JobList.mock";
 import ImageLightbox from "../../components/ImageLightbox";
 import { useLiff } from "../../hooks/useLiff";
+import { useNavigate } from "react-router-dom"; 
 import BackButton from "../../components/shared/BackButton";
-import LocationPinIcon from "@mui/icons-material/LocationPin";
-import StarRoundedIcon from "@mui/icons-material/StarRounded";
-import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
 import InfoOutlineIcon from "@mui/icons-material/InfoOutline";
 import PersonOutlineRoundedIcon from "@mui/icons-material/PersonOutlineRounded";
+import JobStatusChip from "../../components/shared/JobStatusChip";
+import JobActionButtons from "../../components/JobActionButtons";
 
-const JobDetails: React.FC = () => {
+const JobDetails = () => {
   const { profile, isReady, isLoggedIn } = useLiff();
   const { id } = useParams();
   const jobId = parseInt(id || "", 10);
-
   const job = mockJobs.find((job) => job.id === jobId);
 
   if (!job) {
@@ -37,61 +34,61 @@ const JobDetails: React.FC = () => {
   }
 
   const [isSaved, setIsSaved] = useState(false);
-  const [open, setOpen] = useState(false);
-
+  const navigate = useNavigate();
   const [openImageViewer, setOpenImageViewer] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(1);
+  console.log("Job Title:", job.title);
 
   return (
     <>
       {/* Header */}
-      <Box>
-        <AppBar
-          position="fixed"
-          elevation={0}
-          sx={{ backgroundColor: "#00794E", padding: 0, margin: 0 }}
+      <AppBar
+        position="fixed"
+        elevation={0}
+        sx={{ backgroundColor: "#00794E", padding: 0, margin: 0}}
+      >
+        <Toolbar
+          disableGutters
+          sx={{
+            px: 2,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
         >
-          <Toolbar
-            disableGutters
+          <BackButton />
+
+          <Typography
             sx={{
-              px: 2,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
+              flexGrow: 1,
+              textAlign: "center",
+              fontSize: "16px",
+              position: "absolute",
+              left: 0,
+              right: 0,
+              margin: "auto",
+              width: "fit-content",
             }}
           >
-            <BackButton />
+            ข้อมูลงาน
+          </Typography>
 
-            <Typography
-              sx={{
-                flexGrow: 1,
-                textAlign: "center",
-                fontSize: "16px",
-                position: "absolute",
-                left: 0,
-                right: 0,
-                margin: "auto",
-                width: "fit-content",
-              }}
-            >
-              ข้อมูลงาน
-            </Typography>
-          </Toolbar>
-        </AppBar>
-      </Box>
+          <Box sx={{ position: "relative" }}>
+            <Box sx={{ position: "absolute", top: "16px", right: 0 }}>
+              <JobStatusChip status={job.status} />
+            </Box>
+          </Box>
+        </Toolbar>
+      </AppBar>
 
       {/* Content */}
-      <Box
-        paddingTop={"65px"}
-        paddingBottom={"20px"}
-        display={"flex"}
-        flexDirection="column"
-        gap={"16px"}
-      >
-        <Typography variant="h5" fontWeight="bold">
+
+      <Stack spacing={3} mt={10}>
+        <Typography variant="h5" fontWeight="bold" paddingX={"1rem"}>
           {job.title}
         </Typography>
-        <Box display={"flex"} sx={{ gap: "10px" }}>
+
+        <Stack direction="row" spacing={1.25} paddingX={"1rem"}>
           <Typography color="green" sx={{ fontSize: "14px" }}>
             {job.tags}
           </Typography>
@@ -101,147 +98,55 @@ const JobDetails: React.FC = () => {
             {format(new Date(job.postedAt), "d MMMM", { locale: th })}{" "}
             {new Date(job.postedAt).getFullYear() + 543}
           </Typography>
-        </Box>
-        <Typography variant="body1" sx={{ fontSize: "16px" }}>
+        </Stack>
+
+        <Typography variant="body1" paddingX={"1rem"} sx={{ fontSize: "16px" }}>
           {job.description}
         </Typography>
 
         {/* Icon Button Grid */}
-        <Box
-          display="flex"
-          flexWrap="wrap"
-          justifyContent={"space-evenly"}
-          gap={"27px"}
-          height="104px"
-        >
-          <Box
-            flex={1}
-            bgcolor="#FAFAFA"
-            p={2}
-            borderRadius={2}
-            textAlign="center"
-            onClick={() => {
-              const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(
-                job.location
-              )}`;
-              window.open(mapsUrl, "_blank");
-            }}
-          >
-            <LocationPinIcon
-              sx={{ width: "39px", height: "40px", color: "#3AB186" }}
-            />
-            <Typography
-              sx={{ fontSize: "14px", fontWeight: "bold", color: "#1C1818" }}
-            >
-              ดูที่อยู่
-            </Typography>
-          </Box>
+        <JobActionButtons job={job} isSaved={isSaved} setIsSaved={setIsSaved} showCancelButton={false} />
 
-          <Box
-            flex={1}
-            bgcolor={isSaved ? "#3AB186" : "#FAFAFA"}
-            p={2}
-            borderRadius={2}
-            textAlign="center"
-            onClick={() => setIsSaved((prev) => !prev)}
-          >
-            <StarRoundedIcon
-              sx={{
-                width: "39px",
-                height: "39px",
-                color: isSaved ? "#FFFFFF" : "#3AB186",
-              }}
-            />
-            <Typography
-              sx={{
-                fontSize: "14px",
-                fontWeight: "bold",
-                color: isSaved ? "#FFFFFF" : "#1C1818",
-              }}
-            >
-              บันทึก
-            </Typography>
-          </Box>
-
-          <Box
-            flex={1}
-            bgcolor="#FAFAFA"
-            p={2}
-            borderRadius={2}
-            textAlign="center"
-            onClick={() => {
-              window.location.href = `tel:${job.tel}`;
-            }}
-          >
-            <LocalPhoneIcon
-              sx={{ width: "39px", height: "40px", color: "#3AB186" }}
-            />
-            <Typography
-              sx={{ fontSize: "14px", fontWeight: "bold", color: "#1C1818" }}
-            >
-              ติดต่อ
-            </Typography>
-          </Box>
-        </Box>
         <Divider />
 
-        {/* จำนวนเปืดรับ ค่าตอบแทน */}
-
-        <Box display="flex" flexWrap="wrap" justifyContent={"space-around"}>
-          <Box
-            display={"flex"}
-            flexDirection={"column"}
-            gap="16px"
-            alignItems={"center"}
-          >
+        <Stack direction="row" flexWrap="wrap" justifyContent="space-around">
+          <Stack direction="column" spacing={2} alignItems="center">
             <Typography sx={{ fontSize: "14px", color: "#9E9E9E" }}>
               จำนวนที่เปิดรับ
             </Typography>
             <Typography sx={{ fontSize: "18px", fontWeight: "700" }}>
               {job.positions} ตำแหน่ง
             </Typography>
-          </Box>
-          <Box
-            display={"flex"}
-            flexDirection={"column"}
-            gap="16px"
-            alignItems={"center"}
-          >
+          </Stack>
+          <Stack direction="column" spacing={2} alignItems="center">
             <Typography sx={{ fontSize: "14px", color: "#9E9E9E" }}>
               ค่าตอบแทน
             </Typography>
             <Typography sx={{ fontSize: "18px", fontWeight: "700" }}>
-              {job.salary} {job.salaryType}{" "}
+              {job.salary} {job.salaryType}
             </Typography>
-          </Box>
-        </Box>
+          </Stack>
+        </Stack>
+
         <Divider />
 
-        {/* ที่อยู่ที่ทำงาน */}
-        <Box display={"flex"} gap={"16px"}>
+        <Stack direction="row" spacing={2} paddingX={"1rem"}>
           <PlaceOutlinedIcon
             sx={{ width: "18px", height: "18px", color: "#3D3D3D" }}
           />
-          <Typography
-            sx={{ fontWeight: "400", fontSize: "14px", color: "#595E61" }}
-          >
+          <Typography sx={{ fontWeight: 400, fontSize: 14, color: "#595E61" }}>
             {job.location}
           </Typography>
-        </Box>
+        </Stack>
 
-        {/* รูปใหญ่ */}
         <Box
           component="img"
           src={job.imageUrl[0]}
           alt={job.title}
-          sx={{
-            width: "100%",
-            mb: 2,
-          }}
+          sx={{ width: "100%", mb: 2, padding: 0 }}
         />
 
-        {/* รายละเอียดงาน */}
-        <Box display={"flex"} flexDirection={"column"} gap={"16px"}>
+        <Stack direction="column" spacing={3} paddingX={"1rem"}>
           <Box>
             <Typography sx={{ color: "#9E9E9E", fontSize: "14px" }}>
               ภาระงาน
@@ -250,7 +155,6 @@ const JobDetails: React.FC = () => {
               {job.responsibilities}
             </Typography>
           </Box>
-
           <Box>
             <Typography sx={{ color: "#9E9E9E", fontSize: "14px" }}>
               คุณสมบัติ
@@ -259,19 +163,17 @@ const JobDetails: React.FC = () => {
               {job.qualifications}
             </Typography>
           </Box>
-
           <Box>
             <Typography sx={{ color: "#9E9E9E", fontSize: "14px" }}>
               วัน เวลาทำงาน
             </Typography>
-            <Box
-              display={"flex"}
-              gap={"16px"}
-              alignItems={"center"}
+            <Stack
+              direction="row"
+              spacing={2}
+              alignItems="center"
               textAlign="center"
             >
               <AccessTimeRoundedIcon sx={{ fontSize: "16px" }} />
-
               <Typography
                 sx={{ color: "#1C1818", fontSize: "16px", fontWeight: "700" }}
               >
@@ -280,38 +182,36 @@ const JobDetails: React.FC = () => {
               <Typography sx={{ color: "#1C1818", fontSize: "16px" }}>
                 {job.time}
               </Typography>
-            </Box>
+            </Stack>
           </Box>
 
           <Divider />
 
-          <Box display={"flex"} gap={"10px"}>
+          <Stack direction="row" spacing={1.25}>
             <InfoOutlineIcon sx={{ fontSize: "16px" }} />
             <Typography sx={{ fontSize: "14px" }}>
               แจ้งลาล่วงหน้ากับหัวหน้างานเสมอ ติดต่อสอบถามข้อมูลเพิ่มเติม
               ก่อนกดสมัคร จะมีการนัดสัมภาษณ์งานก่อนยืนยันรับเข้าทำงาน
             </Typography>
-          </Box>
+          </Stack>
 
           <Divider />
 
-          <Box display="flex" gap="10px" alignItems="center">
+          <Stack direction="row" spacing={1.25} alignItems="center">
             <PersonOutlineRoundedIcon sx={{ fontSize: "18px" }} />
             <Typography sx={{ fontSize: "16px", fontWeight: "500" }}>
               {isReady && isLoggedIn && profile?.displayName
                 ? `${profile.displayName}`
                 : "กำลังโหลดชื่อผู้ใช้..."}
             </Typography>
-          </Box>
+          </Stack>
 
-          {/* รูปเพิ่มเติม */}
           <Box>
             <Typography sx={{ color: "#9E9E9E", fontSize: "14px" }} mb={1}>
               รูปภาพเพิ่มเติม
             </Typography>
-
             {job.imageUrl.length > 1 ? (
-              <Box display="flex" gap={2} overflow="auto">
+              <Stack direction="row" spacing={2} overflow="auto">
                 {job.imageUrl.slice(1).map((url, index) => (
                   <Box
                     key={index}
@@ -332,9 +232,13 @@ const JobDetails: React.FC = () => {
                     }}
                   />
                 ))}
-              </Box>
+              </Stack>
             ) : (
-              <Typography color="text.secondary" fontSize={"14px"} fontWeight={"600"}>
+              <Typography
+                color="text.secondary"
+                fontSize="14px"
+                fontWeight={600}
+              >
                 ไม่มีรูปภาพเพิ่มเติม
               </Typography>
             )}
@@ -343,11 +247,10 @@ const JobDetails: React.FC = () => {
           <ImageLightbox
             images={job.imageUrl}
             open={openImageViewer}
-            initialIndex={currentImageIndex+1}
+            initialIndex={currentImageIndex + 1}
             onClose={() => setOpenImageViewer(false)}
           />
 
-          {/* ปุ่มสมัครงาน */}
           <Box mt={3} textAlign="center">
             <Button
               sx={{
@@ -360,28 +263,13 @@ const JobDetails: React.FC = () => {
                 width: "100%",
                 borderRadius: "8px",
               }}
-              onClick={() => setOpen(true)}
+             onClick={() => navigate(`/jobs/${job.id}/reviewRegister`)} 
             >
               สมัครงานนี้
             </Button>
           </Box>
-
-          <Snackbar
-            open={open}
-            autoHideDuration={4000}
-            onClose={() => setOpen(false)}
-            anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          >
-            <Alert
-              onClose={() => setOpen(false)}
-              severity="success"
-              sx={{ width: "100%" }}
-            >
-              ส่งแบบฟอร์มสมัครงานของคุณแล้ว รอการตอบกลับ
-            </Alert>
-          </Snackbar>
-        </Box>
-      </Box>
+        </Stack>
+      </Stack>
     </>
   );
 };

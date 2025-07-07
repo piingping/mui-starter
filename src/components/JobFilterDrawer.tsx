@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Drawer,
   Box,
@@ -6,45 +5,26 @@ import {
   IconButton,
   Button,
   Chip,
+  Stack,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { salaryRanges, jobTags, jobStatuses } from "../constants/jobFilters";
+import type { JobFilterDrawerProps } from "../types/jobFilterDrawer";
+import { FILTER_ALL } from "../constants/jobFilters";
 
-const salaryRanges = [
-  "ทั้งหมด",
-  "1 - 500 บาท",
-  "501 - 2,000 บาท",
-  "2,001 - 5,000 บาท",
-  "5,001 - 10,000 บาท",
-  "10,001 - 20,000 บาท",
-  "20,000 บาทขั้นไป",
-];
-const jobTags = ["ทั้งหมด", "รับจ้าง", "บริการ", "งานช่าง", "ขนส่ง"];
-const jobStatuses = ["ทั้งหมด", "ว่างอยู่", "ใกล้เต็ม", "เต็มแล้ว"];
-
-type Props = {
-  open: boolean;
-  onClose: () => void;
-  selectedFilters: {
-    salary?: string;
-    tag?: string;
-    status?: string;
-  };
-  onFilterChange: (filters: Props["selectedFilters"]) => void;
-};
-
-const JobFilterDrawer: React.FC<Props> = ({
+const JobFilterDrawer = ({
   open,
   onClose,
   selectedFilters,
   onFilterChange,
-}) => {
+}: JobFilterDrawerProps) => {
   const handleSelect = (
-    type: keyof Props["selectedFilters"],
+    type: keyof JobFilterDrawerProps["selectedFilters"],
     value: string
   ) => {
     onFilterChange({
       ...selectedFilters,
-      [type]: value === "ทั้งหมด" ? undefined : value,
+      [type]: value === FILTER_ALL ? undefined : value,
     });
   };
 
@@ -62,19 +42,18 @@ const JobFilterDrawer: React.FC<Props> = ({
         },
       }}
     >
-      <Box
+      <Stack
         px={2}
         py={3}
         height="60vh"
-        display="flex"
-        flexDirection="column"
         justifyContent="space-between"
+        direction="column"
       >
         <Box>
-          <Box
-            display="flex"
-            alignItems="center"
+          <Stack
+            direction="row"
             justifyContent="space-between"
+            alignItems="center"
             mb={2}
           >
             <Box flexGrow={1} textAlign="center">
@@ -85,18 +64,18 @@ const JobFilterDrawer: React.FC<Props> = ({
             <IconButton onClick={onClose}>
               <CloseIcon />
             </IconButton>
-          </Box>
+          </Stack>
 
           <Box mb={3}>
             <Typography fontWeight="bold" mb={1}>
               ค่าตอบแทน
             </Typography>
-            <Box
+            <Stack
+              direction="row"
+              spacing={1}
               sx={{
-                display: "flex",
                 overflowX: "auto",
                 whiteSpace: "nowrap",
-                gap: 1,
                 pb: 1,
               }}
             >
@@ -109,35 +88,33 @@ const JobFilterDrawer: React.FC<Props> = ({
                   sx={{
                     flexShrink: 0,
                     borderRadius: 3,
-                   
                     border: 1,
                     backgroundColor:
                       selectedFilters.salary === range ||
-                      (!selectedFilters.salary && range === "ทั้งหมด")
+                      (!selectedFilters.salary && range === FILTER_ALL)
                         ? "#FFAD4D"
                         : "#FFFFFF",
                     borderColor:
                       selectedFilters.salary === range ||
-                      (!selectedFilters.salary && range === "ทั้งหมด")
+                      (!selectedFilters.salary && range === FILTER_ALL)
                         ? "#FF8A00"
                         : "#9E9E9E",
-                     
                   }}
                 />
               ))}
-            </Box>
+            </Stack>
           </Box>
 
           <Box mb={3}>
             <Typography fontWeight="bold" mb={1}>
               ประเภทงาน
             </Typography>
-            <Box
+            <Stack
+              direction="row"
+              spacing={1}
               sx={{
-                display: "flex",
                 overflowX: "auto",
                 whiteSpace: "nowrap",
-                gap: 1,
                 pb: 1,
               }}
             >
@@ -153,30 +130,30 @@ const JobFilterDrawer: React.FC<Props> = ({
                     border: 1,
                     backgroundColor:
                       selectedFilters.tag === tag ||
-                      (!selectedFilters.tag && tag === "ทั้งหมด")
+                      (!selectedFilters.tag && tag === FILTER_ALL)
                         ? "#FFAD4D"
                         : "#FFFFFF",
                     borderColor:
                       selectedFilters.tag === tag ||
-                      (!selectedFilters.tag && tag === "ทั้งหมด")
+                      (!selectedFilters.tag && tag === FILTER_ALL)
                         ? "#FF8A00"
                         : "#9E9E9E",
                   }}
                 />
               ))}
-            </Box>
+            </Stack>
           </Box>
 
           <Box>
             <Typography fontWeight="bold" mb={1}>
               สถานะงาน
             </Typography>
-            <Box
+            <Stack
+              direction="row"
+              spacing={1}
               sx={{
-                display: "flex",
                 overflowX: "auto",
                 whiteSpace: "nowrap",
-                gap: 1,
                 pb: 1,
               }}
             >
@@ -192,18 +169,18 @@ const JobFilterDrawer: React.FC<Props> = ({
                     border: 1,
                     backgroundColor:
                       selectedFilters.status === status ||
-                      (!selectedFilters.status && status === "ทั้งหมด")
+                      (!selectedFilters.status && status === FILTER_ALL)
                         ? "#FFAD4D"
                         : "#FFFFFF",
                     borderColor:
                       selectedFilters.status === status ||
-                      (!selectedFilters.status && status === "ทั้งหมด")
+                      (!selectedFilters.status && status === FILTER_ALL)
                         ? "#FF8A00"
                         : "#9E9E9E",
                   }}
                 />
               ))}
-            </Box>
+            </Stack>
           </Box>
         </Box>
 
@@ -221,7 +198,7 @@ const JobFilterDrawer: React.FC<Props> = ({
         >
           ยืนยัน
         </Button>
-      </Box>
+      </Stack>
     </Drawer>
   );
 };

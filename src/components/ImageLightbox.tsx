@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog, DialogContent, IconButton, Box } from "@mui/material";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 
-type ImageLightboxProps = {
-  images: string[];
-  open: boolean;
-  initialIndex: number;
-  onClose: () => void;
-};
-
-const ImageLightbox: React.FC<ImageLightboxProps> = ({
+const ImageLightbox = ({
   images,
   open,
   initialIndex,
   onClose,
+}: {
+  images: string[];
+  open: boolean;
+  initialIndex: number;
+  onClose: () => void;
 }) => {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
