@@ -10,6 +10,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { salaryRanges, jobTags, jobStatuses } from "../constants/jobFilters";
 import type { JobFilterDrawerProps } from "../types/jobFilterDrawer";
+import { FILTER_ALL } from "../constants/jobFilters";
 
 const JobFilterDrawer = ({
   open,
@@ -23,7 +24,7 @@ const JobFilterDrawer = ({
   ) => {
     onFilterChange({
       ...selectedFilters,
-      [type]: value === "ทั้งหมด" ? undefined : value,
+      [type]: value === FILTER_ALL ? undefined : value,
     });
   };
 
@@ -90,12 +91,12 @@ const JobFilterDrawer = ({
                     border: 1,
                     backgroundColor:
                       selectedFilters.salary === range ||
-                      (!selectedFilters.salary && range === "ทั้งหมด")
+                      (!selectedFilters.salary && range === FILTER_ALL)
                         ? "#FFAD4D"
                         : "#FFFFFF",
                     borderColor:
                       selectedFilters.salary === range ||
-                      (!selectedFilters.salary && range === "ทั้งหมด")
+                      (!selectedFilters.salary && range === FILTER_ALL)
                         ? "#FF8A00"
                         : "#9E9E9E",
                   }}
@@ -129,12 +130,12 @@ const JobFilterDrawer = ({
                     border: 1,
                     backgroundColor:
                       selectedFilters.tag === tag ||
-                      (!selectedFilters.tag && tag === "ทั้งหมด")
+                      (!selectedFilters.tag && tag === FILTER_ALL)
                         ? "#FFAD4D"
                         : "#FFFFFF",
                     borderColor:
                       selectedFilters.tag === tag ||
-                      (!selectedFilters.tag && tag === "ทั้งหมด")
+                      (!selectedFilters.tag && tag === FILTER_ALL)
                         ? "#FF8A00"
                         : "#9E9E9E",
                   }}
@@ -168,12 +169,12 @@ const JobFilterDrawer = ({
                     border: 1,
                     backgroundColor:
                       selectedFilters.status === status ||
-                      (!selectedFilters.status && status === "ทั้งหมด")
+                      (!selectedFilters.status && status === FILTER_ALL)
                         ? "#FFAD4D"
                         : "#FFFFFF",
                     borderColor:
                       selectedFilters.status === status ||
-                      (!selectedFilters.status && status === "ทั้งหมด")
+                      (!selectedFilters.status && status === FILTER_ALL)
                         ? "#FF8A00"
                         : "#9E9E9E",
                   }}

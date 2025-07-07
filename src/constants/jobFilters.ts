@@ -1,5 +1,7 @@
+export const FILTER_ALL = "ทั้งหมด"; 
+
 export const salaryRanges = [
-  "ทั้งหมด",
+  FILTER_ALL,
   "1 - 500 บาท",
   "501 - 2,000 บาท",
   "2,001 - 5,000 บาท",
@@ -8,6 +10,18 @@ export const salaryRanges = [
   "20,000 บาทขั้นไป",
 ];
 
-export const jobTags = ["ทั้งหมด", "รับจ้าง", "บริการ", "งานช่าง", "ขนส่ง"];
+export const jobTags = [
+  FILTER_ALL,
+  "รับจ้าง",
+  "บริการ",
+  "งานช่าง",
+  "ขนส่ง",
+];
 
-export const jobStatuses = ["ทั้งหมด", "ว่างอยู่", "ใกล้เต็ม", "เต็มแล้ว"];
+export const jobStatuses = [
+  FILTER_ALL,
+  "ว่างอยู่",
+  "ใกล้เต็ม",
+  "เต็มแล้ว",
+];
+
