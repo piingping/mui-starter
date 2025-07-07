@@ -5,15 +5,11 @@ import TuneIcon from "@mui/icons-material/Tune";
 import JobFilterDrawer from "../../components/JobFilterDrawer";
 import { useState } from "react";
 import JobCard from "../../components/JobCard";
+import type { SelectedFilters } from "../../types/jobFilterDrawer";
 
 const JobList = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [filters, setFilters] = useState<{
-    salary?: string;
-    tag?: string;
-    status?: string;
-  }>({});
-
+  const [filters, setFilters] = useState<SelectedFilters>({});
   const filteredJobs = mockJobs.filter((job) => {
     const salaryOk =
       !filters.salary ||
@@ -33,14 +29,13 @@ const JobList = () => {
       (filters.salary === "20,000 บาทขั้นไป" && job.salary > 20000);
     const tagOk = !filters.tag || job.tags.includes(filters.tag);
     const statusOk = !filters.status || job.status === filters.status;
-
     return salaryOk && tagOk && statusOk;
   });
 
   return (
     <>
-      <Box sx={{padding: "1rem"}}>
-        <Box >
+      <Box sx={{ padding: "1rem" }}>
+        <Box>
           <BackButton />
         </Box>
         <Stack
